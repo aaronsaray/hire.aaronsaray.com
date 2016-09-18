@@ -70,12 +70,12 @@ $(function() {
             d(400, function() {
                 assets['intro-audio'].object.play();
             });
-            
-            $('#intro1').fadeIn(3000).delay(2500).fadeOut(500);
-            d(6000, function() {
+
+            $('#intro1').fadeIn(2000).delay(2000).fadeOut(500);
+            d(4500, function() {
                 $('#intro2').fadeIn(3000).delay(2500).fadeOut(500);
             });
-            d(12000, function() {
+            d(10500, function() {
                 $('#intro3').fadeIn(3000).delay(2500).fadeOut(500, scene1);
             });
         }
@@ -93,15 +93,15 @@ $(function() {
             introText(1, 0, 'In a world', $headerText);
             introText(1400, 0, 'where timelines loom', $headerText);
             introText(3000, 300, 'hackers run wild', $headerText);
-            introText(6000, 2000, 'and software bugs are just not unacceptable', $headerText);
-            introText(9500, 0, 'One man', $headerText);
+            introText(5500, 2000, 'and software bugs are just not unacceptable', $headerText);
+            introText(9200, 0, 'One man', $headerText);
             
-            d(12500, function() {
+            d(11000, function() {
                 $headerText.html('Only Hope').fadeIn(1000, function() {
                     $headerText.animate({
                         fontSize: "10rem",
                         opacity: 0
-                    }, 5000, function() {
+                    }, 6000, function() {
                         window.location.href = 'https://aaronsaray.com/'
                     });
                 })
