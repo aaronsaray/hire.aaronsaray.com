@@ -145,6 +145,7 @@ $(function() {
                         }
                     }, false);
                     assets[name].object.src = asset.src;
+                    assets[name].object.load();
                 });
             }
         }
