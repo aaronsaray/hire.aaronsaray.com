@@ -34,10 +34,6 @@ $(function() {
             "scene1-background": {
                 type: "audio",
                 src: "assets/scene1-background.m4a"
-            },
-            "scene1-matrix": {
-                type: "video",
-                src: "assets/matrix.mp4"
             }
         };
 
@@ -105,22 +101,12 @@ $(function() {
                     $headerText.animate({
                         fontSize: "10rem",
                         opacity: 0
-                    }, 5000);
+                    }, 5000, function() {
+                        window.location.href = 'https://aaronsaray.com/'
+                    });
                 })
             });
             
-            /** begin matrix slider **/
-            d(10, function() {
-                var $matrix = $('#scene1-matrix');
-                assets['scene1-matrix'].object.play();
-                $matrix.append(assets['scene1-matrix'].object);
-                $matrix.show().animate({
-                    bottom: $(window).height() + 'px'
-                }, 15000, function() {
-                    $matrix.remove();
-                });
-            });
-
             /** begin audio **/
             d(100, function() {
                 assets['scene1-voice'].object.play();
