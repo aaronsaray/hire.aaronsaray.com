@@ -25,7 +25,7 @@ $(function() {
         var assets = {
             "intro-audio": {
                 type: "audio",
-                src: "assets/intro.mp3"
+                src: "assets/intro.m4a"
             },
             "scene1-voice": {
                 type: "audio",
