@@ -24,16 +24,20 @@ $(function() {
          */
         var assets = {
             "intro-audio": {
-                type: "Audio",
+                type: "audio",
                 src: "assets/intro.mp3"
             },
             "scene1-voice": {
-                type: "Audio",
+                type: "audio",
                 src: "assets/scene1.m4a"
             },
             "scene1-background": {
-                type: "Audio",
+                type: "audio",
                 src: "assets/scene1-background.m4a"
+            },
+            "scene1-matrix": {
+                type: "video",
+                src: "assets/matrix.mp4"
             }
         };
 
@@ -60,9 +64,6 @@ $(function() {
                     addIntro();
                 });
             });
-            // d(26000, function() {
-            //     alert('next scene');
-            // });
         }
 
         /**
@@ -111,13 +112,8 @@ $(function() {
             /** begin matrix slider **/
             d(10, function() {
                 var $matrix = $('#scene1-matrix');
-                $matrix.append($('<video />', {
-                    id: 'video',
-                    src: 'assets/matrix.mp4',
-                    type: 'video/mp4',
-                    controls: false,
-                    autoplay: true
-                }));
+                assets['scene1-matrix'].object.play();
+                $matrix.append(assets['scene1-matrix'].object);
                 $matrix.show().animate({
                     bottom: $(window).height() + 'px'
                 }, 15000, function() {
@@ -152,7 +148,7 @@ $(function() {
                 var preloadedCount = 0, totalCount = Object.keys(assets).length, percentComplete = 0;
                 
                 $.each(assets, function(name, asset) {
-                    assets[name].object = new Audio();
+                    assets[name].object = document.createElement(asset.type);
                     assets[name].object.addEventListener('canplaythrough', function() {
                         preloadedCount += 1;
                         percentComplete = Math.round(preloadedCount / totalCount * 100);
