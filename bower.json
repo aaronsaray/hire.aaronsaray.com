@@ -1,7 +1,0 @@
-{
-  "name": "aaronsaray-hire",
-  "description": "Source code to hire.aaronsaray.com",
-  "dependencies": {
-    "jquery.html5loader": "^1.8.0"
-  }
-}

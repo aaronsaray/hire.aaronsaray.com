@@ -19,32 +19,22 @@ $(function() {
         var $loaderDisplay = $('#loader-display');
 
         /**
-         * Files used for the preloader script
-         * @type {{files: *[]}}
+         * This holds the assets we'll be using moving forward.
+         * Basically this is the source info - and then there is a property added on of name 'object' which is the player
          */
-        var preloadFiles = {
-            files: [
-                [
-                    {
-                        "type":"AUDIO",
-                        "sources": {
-                            "m4a": {
-                                source: "assets/intro.m4a",
-                                size: 170351
-                            }
-                        }
-                    },
-                    {
-                        "type":"VIDEO",
-                        "sources": {
-                            "h264": {
-                                "source": "assets/matrix.mp4",
-                                "size": 10074114
-                            }
-                        }
-                    }
-                ]
-            ]
+        var assets = {
+            "intro-audio": {
+                type: "Audio",
+                src: "assets/intro.mp3"
+            },
+            "scene1-voice": {
+                type: "Audio",
+                src: "assets/scene1.m4a"
+            },
+            "scene1-background": {
+                type: "Audio",
+                src: "assets/scene1-background.m4a"
+            }
         };
 
         /**
@@ -64,20 +54,43 @@ $(function() {
         function beginPlayback()
         {
             $loaderPercentage.fadeOut(function() {
-                $loaderDisplay.fadeOut(addIntro);
+                $loaderDisplay.fadeOut(function() {
+                    $loaderPercentage.remove();
+                    $loaderDisplay.remove();
+                    addIntro();
+                });
             });
-            d(19000, function() {
-                alert('next scene');
-            });
+            // d(26000, function() {
+            //     alert('next scene');
+            // });
         }
 
         /**
-         * Queues up the intro part
+         * Does the film intro
          */
         function addIntro()
         {
-            var $headerText = $('<div class="panel" id="top-intro-text"></div>').css('top', '5%').css('width', '100%').css('height', '4rem').hide();
-            $headerText.appendTo('body');
+            d(400, function() {
+                assets['intro-audio'].object.play();
+            });
+            
+            $('#intro1').fadeIn(3000).delay(2500).fadeOut(500);
+            d(6000, function() {
+                $('#intro2').fadeIn(3000).delay(2500).fadeOut(500);
+            });
+            d(12000, function() {
+                $('#intro3').fadeIn(3000).delay(2500).fadeOut(500, scene1);
+            });
+        }
+        
+        /**
+         * Queues up the scene 1
+         */
+        function scene1()
+        {
+            assets['scene1-background'].object.play();
+            
+            var $headerText = $('#scene1-intro-text');
             
             /** begin text **/
             introText(1, 0, 'In a world', $headerText);
@@ -97,7 +110,7 @@ $(function() {
             
             /** begin matrix slider **/
             d(10, function() {
-                var $matrix = $('<div class="panel"></div>').css('bottom', '-360px').css('right', '10%').css('width', '640px');
+                var $matrix = $('#scene1-matrix');
                 $matrix.append($('<video />', {
                     id: 'video',
                     src: 'assets/matrix.mp4',
@@ -105,18 +118,16 @@ $(function() {
                     controls: false,
                     autoplay: true
                 }));
-                $matrix.appendTo('body');
-                $matrix.animate({
+                $matrix.show().animate({
                     bottom: $(window).height() + 'px'
                 }, 15000, function() {
                     $matrix.remove();
                 });
             });
-            
+
             /** begin audio **/
             d(100, function() {
-                var introAudio = new Audio('assets/intro.m4a');
-                introAudio.play();
+                assets['scene1-voice'].object.play();
             });
         }
 
@@ -138,13 +149,20 @@ $(function() {
         
         return {
             init: function() {
-                $.html5Loader({
-                    filesToLoad: preloadFiles,
-                    onComplete: beginPlayback,
-                    onUpdate: function(percentage) {
-                        $loaderDisplay.css('width', percentage + '%');
-                        $loaderPercentage.html(percentage + '%');
-                    }
+                var preloadedCount = 0, totalCount = Object.keys(assets).length, percentComplete = 0;
+                
+                $.each(assets, function(name, asset) {
+                    assets[name].object = new Audio();
+                    assets[name].object.addEventListener('canplaythrough', function() {
+                        preloadedCount += 1;
+                        percentComplete = Math.round(preloadedCount / totalCount * 100);
+                        $loaderDisplay.css('width', percentComplete + '%');
+                        $loaderPercentage.html(percentComplete + '%');
+                        if (preloadedCount == totalCount) {
+                            beginPlayback();
+                        }
+                    }, false);
+                    assets[name].object.src = asset.src;
                 });
             }
         }
@@ -152,5 +170,4 @@ $(function() {
     
     var aaron = new Website();
     aaron.init();
-    
 });
