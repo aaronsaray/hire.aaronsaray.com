@@ -35,8 +35,6 @@ html, body {
 
 /** intro **/
 #intro1 {
-    border-top: 2px solid #ffffff;
-    border-bottom: 2px solid #ffffff;
     width: 400px;
     margin: 15% auto 0 auto;
     display: none;
@@ -48,12 +46,13 @@ html, body {
 #intro1 > div:first-child {
     font-size: 200px;
     line-height: 160px;
-    border-bottom: 1px solid #cccccc;
 }
 #intro1 > div:last-child {
     font-weight:normal;
     font-size: 39px;
     letter-spacing: 15px;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
 }
 
 #intro2 {

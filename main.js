@@ -93,7 +93,7 @@ $(function() {
             introText(1, 0, 'In a world', $headerText);
             introText(1400, 0, 'where timelines loom', $headerText);
             introText(3000, 300, 'hackers run wild', $headerText);
-            introText(5500, 2000, 'and software bugs are just not unacceptable', $headerText);
+            introText(5500, 2000, 'and software bugs are just not acceptable', $headerText);
             introText(9200, 0, 'One man', $headerText);
             
             d(11000, function() {
